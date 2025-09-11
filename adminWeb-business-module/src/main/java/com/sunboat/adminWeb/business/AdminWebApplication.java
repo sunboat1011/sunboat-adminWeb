@@ -13,14 +13,14 @@ import org.springframework.context.annotation.ComponentScan;
         "com.sunboat.adminWeb.business", // user-business 自身的包
         "com.sunboat.common.core" // common-core 中 Bean 所在的根包
 })
-public class BusinessApplication implements CommandLineRunner {
+public class AdminWebApplication implements CommandLineRunner {
 
 
 //    @Value("${spring.profiles.active}")
 //    private String activeProfile;
 
     public static void main(String[] args) {
-        SpringApplication.run(BusinessApplication.class, args);
+        SpringApplication.run(AdminWebApplication.class, args);
     }
 
     @Override

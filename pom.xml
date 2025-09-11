@@ -18,7 +18,7 @@
     <!-- 项目属性配置 -->
     <properties>
         <!-- 项目内引用的 common-module 版本 -->
-        <adminWeb-common-module.version>1.0.8-adminWeb-SNAPSHOT</adminWeb-common-module.version>
+        <adminWeb-common-module.version>1.0.9-adminWeb-SNAPSHOT</adminWeb-common-module.version>
         <common-core.version>1.0.0-third-SNAPSHOT</common-core.version>
 
 
@@ -27,11 +27,32 @@
         <java.version>1.8</java.version>
         <!-- Spring Boot 版本 -->
         <spring-boot.version>2.7.15</spring-boot.version>
+        <spring-auth-server.version>0.4.0</spring-auth-server.version>
     </properties>
 
     <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>
+
+
+            <!-- 安全 + 授权服务器 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>2.7.18</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring-auth-server.version}</version>
+            </dependency>
+
+            <!-- 资源服务器（也可拆成独立工程） -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            </dependency>
+
             <dependency>
                 <groupId>com.sunboat</groupId>
                 <artifactId>adminWeb-common-module</artifactId>
@@ -114,11 +135,11 @@
             </dependency>
 
             <!-- 安全相关依赖，为 Spring Boot 应用添加安全功能 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-                <version>3.2.1</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-security</artifactId>-->
+<!--                <version>3.2.1</version>-->
+<!--            </dependency>-->
 
             <!-- 缓存相关依赖 -->
             <!-- 为 Spring Boot 应用添加缓存功能 -->
