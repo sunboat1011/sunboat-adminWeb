@@ -1,0 +1,235 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 项目基本信息 -->
+    <groupId>com.sunboat</groupId>
+    <artifactId>adminWeb</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <!-- 子模块列表 -->
+    <modules>
+        <module>adminWeb-common-module</module>
+        <module>adminWeb-business-module</module>
+    </modules>
+
+    <!-- 项目属性配置 -->
+    <properties>
+        <!-- 项目内引用的 common-module 版本 -->
+        <adminWeb-common-module.version>1.0.8-adminWeb-SNAPSHOT</adminWeb-common-module.version>
+        <common-core.version>1.0.0-third-SNAPSHOT</common-core.version>
+
+
+
+        <!-- Java 版本 -->
+        <java.version>1.8</java.version>
+        <!-- Spring Boot 版本 -->
+        <spring-boot.version>2.7.15</spring-boot.version>
+    </properties>
+
+    <!-- 依赖管理 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.sunboat</groupId>
+                <artifactId>adminWeb-common-module</artifactId>
+                <version>${adminWeb-common-module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sunboat</groupId>
+                <artifactId>adminWeb-business-module</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sunboat</groupId>
+                <artifactId>common-core</artifactId>
+                <version>${common-core.version}</version>
+<!--                <version>1.0.0-first-SNAPSHOT</version>-->
+            </dependency>
+
+            <!-- Spring Boot 依赖 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- JUnit Jupiter API -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>5.8.2</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- Spring Boot 测试依赖 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- JUnit Jupiter Engine -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.8.2</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.5.3.2</version>
+            </dependency>
+
+
+            <!-- 用于构建 Web 应用程序，集成 Spring MVC、Tomcat 等 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
+            <!-- 数据库访问相关依赖 -->
+            <!-- 使用 JDBC 进行数据库访问 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+            <!-- Spring Data JPA，简化数据库访问操作 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+            <!-- MySQL 数据库驱动 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.26</version>
+            </dependency>
+
+            <!-- 安全相关依赖，为 Spring Boot 应用添加安全功能 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
+            <!-- 缓存相关依赖 -->
+            <!-- 为 Spring Boot 应用添加缓存功能 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-cache</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
+
+            <!-- 消息队列相关依赖 -->
+            <!-- Spring Boot 集成 RabbitMQ 消息队列 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+            <!-- Spring Boot 集成 Kafka 消息队列 -->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.kafka</groupId>-->
+<!--                <artifactId>spring-kafka</artifactId>-->
+<!--                <version>2.5.7.RELEASE</version>-->
+<!--            </dependency>-->
+
+            <!-- JSON 处理依赖，Jackson 是 Spring Boot 默认的 JSON 处理库 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.16.0</version>
+            </dependency>
+
+            <!-- 日志相关依赖，Spring Boot 默认使用 Logback 作为日志框架 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.16</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.12</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>3.5.9</version>
+            </dependency>
+            <!-- Freemarker Template Engine -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.31</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>2.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-config-spring-boot-starter</artifactId>
+                <version>0.2.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bootstrap</artifactId>
+                <version>3.1.5</version> <!-- 根据实际情况调整版本 -->
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
+    <!-- 构建配置 -->
+    <build>
+        <plugins>
+            <!-- Spring Boot Maven 插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- 分发管理 -->
+    <distributionManagement>
+        <!-- 发布版本仓库 -->
+        <repository>
+            <id>sunboat-maven-repo</id>
+            <name>sunboat-maven-repo</name>
+            <url>http://localhost:8081/repository/sunboat-maven-repo/</url>
+        </repository>
+        <!-- 快照版本仓库 -->
+        <snapshotRepository>
+            <id>sunboat-maven-repo</id>
+            <name>sunboat-maven-repo</name>
+            <url>http://localhost:8081/repository/sunboat-maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
