@@ -1,58 +1,56 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 项目基本信息 -->
+    <!-- 1. 项目基本信息 -->
     <groupId>com.sunboat</groupId>
     <artifactId>adminWeb</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
+    <description>adminWeb 项目父工程（统一管理子模块和依赖版本）</description>
 
-    <!-- 子模块列表 -->
+    <!-- 2. 继承 Spring Boot 官方父工程（版本固定为2.7.18，子模块所有Spring依赖均继承此版本） -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.18</version>
+<!--        <relativePath/> &lt;!&ndash; 优先从Maven仓库拉取，避免本地路径问题 &ndash;&gt;-->
+    </parent>
+
+    <!-- 3. 子模块声明（确保Maven能识别所有子模块） -->
     <modules>
         <module>adminWeb-common-module</module>
         <module>adminWeb-business-module</module>
     </modules>
 
-    <!-- 项目属性配置 -->
+    <!-- 4. 全局属性（统一管理所有自定义版本，子模块可直接引用） -->
     <properties>
-        <!-- 项目内引用的 common-module 版本 -->
+        <!-- 项目内部模块版本 -->
         <adminWeb-common-module.version>1.0.9-adminWeb-SNAPSHOT</adminWeb-common-module.version>
         <common-core.version>1.0.0-third-SNAPSHOT</common-core.version>
 
-
-
-        <!-- Java 版本 -->
+        <!-- 基础环境版本（与Spring Boot 2.7.18兼容） -->
         <java.version>1.8</java.version>
-        <!-- Spring Boot 版本 -->
-        <spring-boot.version>2.7.15</spring-boot.version>
-        <spring-auth-server.version>0.4.0</spring-auth-server.version>
+        <spring-auth-server.version>0.4.0</spring-auth-server.version> <!-- 与2.7.x兼容的版本 -->
+
+        <!-- 第三方依赖版本（统一管理，避免子模块重复定义） -->
+        <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
+        <mybatis-plus-generator.version>3.5.9</mybatis-plus-generator.version>
+        <hutool.version>5.8.16</hutool.version>
+        <lombok.version>1.18.12</lombok.version>
+        <mysql-connector.version>8.0.26</mysql-connector.version>
+        <nacos-client.version>2.2.0</nacos-client.version>
+        <nacos-config-starter.version>0.2.11</nacos-config-starter.version>
+        <spring-cloud-bootstrap.version>3.1.5</spring-cloud-bootstrap.version> <!-- 与2.7.x兼容 -->
+        <freemarker.version>2.3.31</freemarker.version>
     </properties>
 
-    <!-- 依赖管理 -->
+    <!-- 5. 依赖管理（核心：子模块需显式引入依赖，但无需指定版本，自动继承此处配置） -->
     <dependencyManagement>
         <dependencies>
-
-
-            <!-- 安全 + 授权服务器 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-                <version>2.7.18</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-oauth2-authorization-server</artifactId>
-                <version>${spring-auth-server.version}</version>
-            </dependency>
-
-            <!-- 资源服务器（也可拆成独立工程） -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-            </dependency>
-
+            <!-- ===== 项目内部模块（子模块间依赖时用） ===== -->
             <dependency>
                 <groupId>com.sunboat</groupId>
                 <artifactId>adminWeb-common-module</artifactId>
@@ -61,184 +59,165 @@
             <dependency>
                 <groupId>com.sunboat</groupId>
                 <artifactId>adminWeb-business-module</artifactId>
-                <version>1.0.0</version>
+                <version>${project.version}</version> <!-- 继承父工程版本1.0.0 -->
             </dependency>
             <dependency>
                 <groupId>com.sunboat</groupId>
                 <artifactId>common-core</artifactId>
                 <version>${common-core.version}</version>
-<!--                <version>1.0.0-first-SNAPSHOT</version>-->
             </dependency>
 
-            <!-- Spring Boot 依赖 -->
+            <!-- ===== Spring Boot 核心依赖（无版本：继承spring-boot-starter-parent的版本） ===== -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <artifactId>spring-boot-starter</artifactId>
             </dependency>
-            <!-- JUnit Jupiter API -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>5.8.2</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- Spring Boot 测试依赖 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring-boot.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- JUnit Jupiter Engine -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.8.2</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.5.3.2</version>
-            </dependency>
-
-
-            <!-- 用于构建 Web 应用程序，集成 Spring MVC、Tomcat 等 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>3.2.1</version>
             </dependency>
-
-            <!-- 数据库访问相关依赖 -->
-            <!-- 使用 JDBC 进行数据库访问 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring-auth-server.version}</version> <!-- 非Spring Boot默认依赖，需指定版本 -->
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>
-                <version>3.2.1</version>
             </dependency>
-            <!-- Spring Data JPA，简化数据库访问操作 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
-                <version>3.2.1</version>
             </dependency>
-            <!-- MySQL 数据库驱动 -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.26</version>
-            </dependency>
-
-            <!-- 安全相关依赖，为 Spring Boot 应用添加安全功能 -->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter-security</artifactId>-->
-<!--                <version>3.2.1</version>-->
-<!--            </dependency>-->
-
-            <!-- 缓存相关依赖 -->
-            <!-- 为 Spring Boot 应用添加缓存功能 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-cache</artifactId>
-                <version>3.2.1</version>
             </dependency>
-
-
-            <!-- 消息队列相关依赖 -->
-            <!-- Spring Boot 集成 RabbitMQ 消息队列 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-amqp</artifactId>
-                <version>3.2.1</version>
-            </dependency>
-            <!-- Spring Boot 集成 Kafka 消息队列 -->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.kafka</groupId>-->
-<!--                <artifactId>spring-kafka</artifactId>-->
-<!--                <version>2.5.7.RELEASE</version>-->
-<!--            </dependency>-->
-
-            <!-- JSON 处理依赖，Jackson 是 Spring Boot 默认的 JSON 处理库 -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.16.0</version>
-            </dependency>
-
-            <!-- 日志相关依赖，Spring Boot 默认使用 Logback 作为日志框架 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-logging</artifactId>
-                <version>3.2.1</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-aop</artifactId>
             </dependency>
-
             <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>5.8.16</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+                <!-- 排除重复的junit，避免冲突（spring-boot-starter-test已包含junit-jupiter） -->
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.junit.vintage</groupId>
+                        <artifactId>junit-vintage-engine</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
+            <!-- ===== 第三方工具/ORM（版本引用全局属性） ===== -->
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.12</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+                <scope>runtime</scope> <!-- 运行时依赖，编译不依赖 -->
             </dependency>
-
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
-                <version>3.5.9</version>
+                <version>${mybatis-plus-generator.version}</version>
             </dependency>
-            <!-- Freemarker Template Engine -->
             <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
-                <version>2.3.31</version>
+                <version>${freemarker.version}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>false</optional> <!-- 确保子模块能直接使用，无需重复引入 -->
+            </dependency>
+
+            <!-- ===== 中间件（Nacos） ===== -->
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
-                <version>2.2.0</version>
+                <version>${nacos-client.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>nacos-config-spring-boot-starter</artifactId>
-                <version>0.2.11</version>
+                <version>${nacos-config-starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-bootstrap</artifactId>
-                <version>3.1.5</version> <!-- 根据实际情况调整版本 -->
+                <version>${spring-cloud-bootstrap.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-
-
-    <!-- 构建配置 -->
+    <!-- 6. 构建插件（统一管理编译、打包配置，子模块可继承） -->
     <build>
         <plugins>
-            <!-- Spring Boot Maven 插件 -->
+            <!-- Spring Boot 打包插件（版本继承spring-boot-starter-parent，无需手动指定） -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> <!-- 确保打包为可运行JAR -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 编译插件（统一JDK版本为1.8） -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version> <!-- 固定插件版本，避免兼容性问题 -->
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding> <!-- 统一编码，避免乱码 -->
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <!-- 分发管理 -->
+    <!-- 7. 分发管理（仓库配置不变，确保快照/正式版本能正确上传） -->
     <distributionManagement>
         <!-- 发布版本仓库 -->
         <repository>

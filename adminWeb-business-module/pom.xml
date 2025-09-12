@@ -3,110 +3,92 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- 继承父工程（路径正确，确保版本继承生效） -->
     <parent>
         <groupId>com.sunboat</groupId>
         <artifactId>adminWeb</artifactId>
         <version>1.0.0</version>
+<!--        <relativePath>../pom.xml</relativePath> &lt;!&ndash; 父POM在子模块上一级目录 &ndash;&gt;-->
     </parent>
 
+    <!-- 子模块信息（artifactId唯一，version继承父POM的1.0.0） -->
     <artifactId>adminWeb-business-module</artifactId>
+    <packaging>jar</packaging> <!-- 若为启动类所在模块，可改为war（需配合spring-boot-starter-web） -->
 
     <dependencies>
+        <!-- 1. 项目内部依赖（依赖common-core和common-module，无版本：继承父POM） -->
         <dependency>
             <groupId>com.sunboat</groupId>
             <artifactId>common-core</artifactId>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sunboat</groupId>
+            <artifactId>adminWeb-common-module</artifactId>
+        </dependency>
+
+        <!-- 2. Spring Boot 业务依赖（无版本：继承父POM） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId> <!-- 业务模块需Web能力，保留 -->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- 3. 第三方依赖（无版本：继承父POM） -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
-
-        <!-- 用于构建 Web 应用程序，集成 Spring MVC、Tomcat 等 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
         </dependency>
-
-        <!-- 数据库访问相关依赖 -->
-        <!-- 使用 JDBC 进行数据库访问 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
         </dependency>
-
-        <!-- MySQL 数据库驱动 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <!-- 安全相关依赖，为 Spring Boot 应用添加安全功能 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <!-- 缓存相关依赖 -->
-        <!-- 为 Spring Boot 应用添加缓存功能 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
-
-        <!-- 消息队列相关依赖 -->
-        <!-- Spring Boot 集成 RabbitMQ 消息队列 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-
-        <!-- JSON 处理依赖，Jackson 是 Spring Boot 默认的 JSON 处理库 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-
-        <!-- 日志相关依赖，Spring Boot 默认使用 Logback 作为日志框架 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-        </dependency>
-        <!-- Freemarker Template Engine -->
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-        </dependency>
-
+        <!-- 4. 中间件依赖（无版本：继承父POM） -->
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
@@ -119,14 +101,9 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.sunboat</groupId>
-            <artifactId>adminWeb-common-module</artifactId>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
-
+    <!-- 构建配置（若为启动类模块，需保留spring-boot-maven-plugin；否则可简化） -->
     <build>
         <resources>
             <resource>
@@ -135,16 +112,15 @@
             </resource>
         </resources>
         <plugins>
+            <!-- 若此模块是启动类所在模块，保留此插件（确保可运行）；否则可删除 -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <!-- 指定启动类（替换为你的实际启动类全路径） -->
+                    <mainClass>com.sunboat.adminweb.business.AdminWebApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-
-</project>    
+</project>
