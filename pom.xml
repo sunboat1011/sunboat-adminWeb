@@ -12,12 +12,12 @@
     <description>adminWeb 项目父工程（统一管理子模块和依赖版本）</description>
 
     <!-- 2. 继承 Spring Boot 官方父工程（版本固定为2.7.18，子模块所有Spring依赖均继承此版本） -->
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.18</version>
-<!--        <relativePath/> &lt;!&ndash; 优先从Maven仓库拉取，避免本地路径问题 &ndash;&gt;-->
-    </parent>
+<!--    <parent>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--        <version>2.7.18</version>-->
+<!--&lt;!&ndash;        <relativePath/> &lt;!&ndash; 优先从Maven仓库拉取，避免本地路径问题 &ndash;&gt;&ndash;&gt;-->
+<!--    </parent>-->
 
     <!-- 3. 子模块声明（确保Maven能识别所有子模块） -->
     <modules>
@@ -50,6 +50,11 @@
     <!-- 5. 依赖管理（核心：子模块需显式引入依赖，但无需指定版本，自动继承此处配置） -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.18.3</version>
+            </dependency>
             <!-- ===== 项目内部模块（子模块间依赖时用） ===== -->
             <dependency>
                 <groupId>com.sunboat</groupId>
@@ -71,14 +76,17 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
+                <version>2.7.18</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
+                <version>2.7.18</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
+                <version>2.7.18</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
@@ -88,34 +96,38 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+                <version>2.7.18</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>2.7.18</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-jpa</artifactId>
-            </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-cache</artifactId>
+                <version>2.7.18</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-aop</artifactId>
+                <version>2.7.18</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-logging</artifactId>
+                <version>2.7.18</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>2.7.18</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
+                <version>2.7.18</version>
                 <scope>test</scope>
                 <!-- 排除重复的junit，避免冲突（spring-boot-starter-test已包含junit-jupiter） -->
                 <exclusions>
@@ -186,6 +198,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.18</version>
                 <configuration>
                     <excludes>
                         <exclude>
@@ -196,9 +209,8 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>repackage</goal> <!-- 确保打包为可运行JAR -->
-                        </goals>
+                        <id>repackage</id>
+                        <phase>none</phase>
                     </execution>
                 </executions>
             </plugin>
