@@ -71,7 +71,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.18.3</version>
+                <version>2.16.0</version>
             </dependency>
             <!-- ===== 项目内部模块（子模块间依赖时用） ===== -->
             <dependency>

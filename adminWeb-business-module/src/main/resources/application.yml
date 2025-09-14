@@ -8,6 +8,7 @@ dubbo:
     name: ${spring.application.name}
   registry:
     address: nacos://127.0.0.1:8848
+    group: dev
   protocol:
     name: dubbo
     port: 20880
