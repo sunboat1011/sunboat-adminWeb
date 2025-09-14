@@ -1,4 +1,4 @@
-package com.sunboat.adminweb.provider;
+package com.sunboat.adminWeb.business.provider;
 
 import com.sunboat.adminweb.common.api.HelloService;
 import org.apache.dubbo.config.annotation.DubboService;
