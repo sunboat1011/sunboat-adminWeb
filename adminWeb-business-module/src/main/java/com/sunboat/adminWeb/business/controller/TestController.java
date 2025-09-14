@@ -7,6 +7,7 @@ import com.sunboat.common.core.utils.RedisTemplateUtils;
 import com.sunboat.common.core.utils.RedissonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,6 +76,26 @@ public class TestController {
     public RtnResult<Void> testAntiShake(String orderId,String userId) {
 
         return RtnResult.success();
+    }
+
+    // 所有认证用户可访问
+    @GetMapping("/public")
+    public String publicApi() {
+        return "这是所有认证用户可访问的接口";
+    }
+
+    // 仅USER角色可访问
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
+    public String userApi() {
+        return "这是USER角色可访问的接口";
+    }
+
+    // 仅ADMIN角色可访问
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminApi() {
+        return "这是ADMIN角色可访问的接口";
     }
 
 
