@@ -28,7 +28,7 @@
     <!-- 4. 全局属性（统一管理所有自定义版本，子模块可直接引用） -->
     <properties>
         <!-- 项目内部模块版本 -->
-        <adminWeb-common-module.version>1.0.9-adminWeb-SNAPSHOT</adminWeb-common-module.version>
+        <adminWeb-common-module.version>1.0.10-adminWeb-SNAPSHOT</adminWeb-common-module.version>
         <common-core.version>1.0.0-third-SNAPSHOT</common-core.version>
 
         <!-- 基础环境版本（与Spring Boot 2.7.18兼容） -->
@@ -71,7 +71,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.18.3</version>
+                <version>2.16.0</version>
             </dependency>
             <!-- ===== 项目内部模块（子模块间依赖时用） ===== -->
             <dependency>

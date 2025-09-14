@@ -13,7 +13,7 @@
 
     <!-- 子模块信息（artifactId唯一，version继承父POM定义的adminWeb-common-module.version） -->
     <artifactId>adminWeb-common-module</artifactId>
-<!--    <version>${adminWeb-common-module.version}</version>-->
+    <version>${adminWeb-common-module.version}</version>
     <packaging>jar</packaging> <!-- 普通工具模块，打包为jar -->
 
     <dependencies>
