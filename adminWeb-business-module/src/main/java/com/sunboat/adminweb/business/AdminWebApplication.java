@@ -9,14 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 
-
-@DubboComponentScan(basePackages = "com.sunboat.adminweb.provider")
-@SpringBootApplication
-@MapperScan("com.sunboat.adminWeb.business.maper")
 @ComponentScan(basePackages = {
         "com.sunboat.adminWeb.business", // user-business 自身的包
         "com.sunboat.common.core" // common-core 中 Bean 所在的根包
 })
+@DubboComponentScan(basePackages = "com.sunboat.adminWeb.business.provider")
+@SpringBootApplication
+//@MapperScan("com.sunboat.adminWeb.business.maper")
 public class AdminWebApplication implements CommandLineRunner {
 
 
